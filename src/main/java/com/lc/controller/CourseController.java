@@ -35,15 +35,14 @@ public class CourseController {
         return "forward:/coures/findall";  //跳转到链接
     }
 
-    @PostMapping("/update")   //更新
-    public String updateById(Course course) {   //前段构造的表单中获得值
+    @GetMapping("/update")   //更新
+    public String updateById(Course course) {   //前端构造的表单中获得值
         courseService.updateCourse(course);
         return "forward:/coures/findall";
     }
 
     @RequestMapping("/findByName/{cName}")  //根据名字查找
     public String findByName(@PathVariable(required = false) String cName, Model model) {
-
         List<Course> byName = courseService.findByName(cName);
         model.addAttribute("courses", byName);
         return "courselist";
@@ -52,12 +51,11 @@ public class CourseController {
     //做页面跳转
     @RequestMapping("/toCreatelist")
     public String fromListToCreate() {
-
         return "createlist";
     }
 
-    @RequestMapping("/toUpdateList")
-    public String fromListToUpdatelist(Long id, Model model) {
+    @RequestMapping("/toUpdateList/{id}")
+    public String fromListToUpdatelist(@PathVariable Long id, Model model) {
         model.addAttribute("courseId", id);
         return "updatelist";
     }
